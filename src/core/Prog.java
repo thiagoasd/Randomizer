@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import util.Afder;
 import util.Batida;
+import util.Checker;
 
 public class Prog {
 
@@ -47,10 +48,17 @@ public class Prog {
 
 						for (Batida batida : batidasDia) {
 							batida.randomize();
+						}
+						
+						Checker.diracaoContinua(batidasDia);
+						Checker.descanso(batidasDia);
+						
+						for(Batida batida: batidasDia) {
 							String batidaAFD = Afder.createAFD(sequencial, batida.getDataHora2(), batida.getPis());
 							printWriter.println(batidaAFD);
 							sequencial++;
 						}
+
 						printWriter.flush();
 
 					}
@@ -74,7 +82,7 @@ public class Prog {
 
 				}
 			}
-			
+
 			bufferedReader.close();
 			printWriter.flush();
 			printWriter.close();
@@ -84,7 +92,7 @@ public class Prog {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-		
+
 		System.out.println("fims");
 
 	}

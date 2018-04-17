@@ -13,6 +13,7 @@ public class Batida {
 	public Batida(String linha) throws NumberFormatException {
 		this.pis = "";
 		this.batida = parser(linha);
+		this.batida2 = this.batida;
 	}
 
 	private LocalDateTime parser(String linha) throws NumberFormatException {
@@ -79,7 +80,7 @@ public class Batida {
 
 	@Override
 	public String toString() {
-		return batida.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm"));
+		return batida.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")) + "\n" + batida2.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")) ;
 	}
 
 }
