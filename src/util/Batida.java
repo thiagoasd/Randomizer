@@ -25,28 +25,34 @@ public class Batida {
 		int min = Integer.parseInt(linha.substring(10, 12));
 		this.pis = linha.substring(12);
 
-		LocalDateTime bat = LocalDateTime.of(ano, mes, dia, hora, min, 0);
+		LocalDateTime bat = LocalDateTime.of(ano, mes, dia, hora, min);
 		return bat;
 	}
 
-	public void randomize() {
+	public int randomize() {
 
+		int saldo = 0;
 		// Se batida exata
 		if (batida.getMinute() % 5 == 0) {
+			int dif = 0;
 			Random random = new Random();
 			int rand = random.nextInt(2);
 			if (rand == 0) {
-				this.batida2 = this.batida.plusMinutes(random.nextInt(5));
+				dif = random.nextInt(5);
+				this.batida2 = this.batida.plusMinutes(dif);
+				saldo -= dif;
 			} else {
-				this.batida2 = this.batida.minusMinutes(random.nextInt(5));
+				dif = random.nextInt(5);
+				this.batida2 = this.batida.minusMinutes(dif);
+				saldo += dif;
 			}
-
+			
 			// Se não, continua a mesma batida
 		} else {
 			this.batida2 = this.batida;
-
 		}
-
+		
+		return saldo;
 	}
 
 	public LocalDateTime getBatida() {

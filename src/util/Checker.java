@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Checker {
-
+	
+	public static int saldo;
+	
 	public static void diracaoContinua(ArrayList<Batida> dia) {
 
 		if (dia.size() % 2 == 0) {
@@ -13,8 +15,12 @@ public class Checker {
 				LocalDateTime saida = dia.get(i + 1).getBatida2();
 
 				LocalDateTime aux = entrada.plusHours(4);
-				if (aux.compareTo(saida) < 0) {
-					System.out.println("Direção continua em " + entrada);
+				if (aux.compareTo(saida) < 1) {
+					
+					saida = arrumaDirecao(entrada, saida);
+					Batida bat = dia.get(i + 1);
+					bat.setBatida2(saida);
+					dia.set(i + 1, bat);
 				}
 
 			}
@@ -43,4 +49,16 @@ public class Checker {
 		return dia;
 	}
 
+	public static LocalDateTime arrumaDirecao(LocalDateTime entrada, LocalDateTime saida) {
+		LocalDateTime saidaMax = entrada.plusHours(4);
+		LocalDateTime saidaNova = saida.minusMinutes(5);
+		saldo -= 5;
+		while(saidaNova.compareTo(saidaMax) >= 0)
+		{
+			saldo -=5;
+			saidaNova = saidaNova.minusMinutes(5);
+		}
+			
+		return saidaNova;
+	}
 }

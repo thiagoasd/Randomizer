@@ -17,10 +17,12 @@ public class Prog {
 	public static void main(String[] args) {
 		File AFD = new File(args[0]);
 		String linha;
-		ArrayList<Batida> batidasDia = new ArrayList<Batida>(10);
+		String errosJustificativa = "";
+		String errosSemSaida = "";
 		boolean justificativa = false;
 		boolean erroJustificativa = false;
-
+		int saldo = 0;
+		ArrayList<Batida> batidasDia = new ArrayList<Batida>(10);
 		try {
 			FileReader fileReader = new FileReader(AFD);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -37,17 +39,17 @@ public class Prog {
 					if (justificativa) {
 						// Se tem horario no meio das justificativas
 						if (erroJustificativa) {
-							System.out.println("Erro de justificativa no dia: " + batidasDia.get(0));
+							errosJustificativa += "Erro de justificativa no dia: " + batidasDia.get(0)+ "\n";
 						}
 
 						// Se é um dia normal
 					} else {
 						if (count % 2 != 0) {
-							System.out.println("Horario sem saida no dia: " + batidasDia.get(0).toString());
+							errosSemSaida += "Horario sem saida no dia: " + batidasDia.get(0).toString() +"\n";
 						}
 
 						for (Batida batida : batidasDia) {
-							batida.randomize();
+							saldo += batida.randomize();
 						}
 						
 						Checker.diracaoContinua(batidasDia);
@@ -87,13 +89,20 @@ public class Prog {
 			printWriter.flush();
 			printWriter.close();
 
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-
-		System.out.println("fims");
+		
+		
+		saldo += Checker.saldo;
+		System.out.println(errosJustificativa);
+		System.out.println(errosSemSaida);
+		System.out.println("Saldo de horas: " + (saldo / 60));
+		System.out.println("Minutos: " + (saldo%60));
+		System.out.println("fim");
 
 	}
 
