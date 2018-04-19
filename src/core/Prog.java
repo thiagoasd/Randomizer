@@ -51,7 +51,7 @@ public class Prog {
 						for (Batida batida : batidasDia) {
 							saldo += batida.randomize();
 						}
-						
+
 						Checker.diracaoContinua(batidasDia);
 						Checker.descanso(batidasDia);
 						
@@ -97,9 +97,12 @@ public class Prog {
 		}
 		
 		
-		saldo += Checker.saldo;
+		
 		System.out.println(errosJustificativa);
 		System.out.println(errosSemSaida);
+		System.out.println("Randomizer: "+ saldo);
+		System.out.println("Checker: " + Checker.saldo);
+		saldo += Checker.saldo;
 		System.out.println("Saldo de horas: " + (saldo / 60));
 		System.out.println("Minutos: " + (saldo%60));
 		System.out.println("fim");

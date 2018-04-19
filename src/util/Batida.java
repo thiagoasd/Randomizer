@@ -38,11 +38,11 @@ public class Batida {
 			Random random = new Random();
 			int rand = random.nextInt(2);
 			if (rand == 0) {
-				dif = random.nextInt(5);
+				dif = random.nextInt(4);
 				this.batida2 = this.batida.plusMinutes(dif);
 				saldo -= dif;
 			} else {
-				dif = random.nextInt(5);
+				dif = random.nextInt(4);
 				this.batida2 = this.batida.minusMinutes(dif);
 				saldo += dif;
 			}
@@ -86,7 +86,7 @@ public class Batida {
 
 	@Override
 	public String toString() {
-		return batida.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")) + "\n" + batida2.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")) ;
+		return batida2.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")) ;
 	}
 
 }
