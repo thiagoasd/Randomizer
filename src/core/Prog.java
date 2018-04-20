@@ -51,7 +51,8 @@ public class Prog {
 						for (Batida batida : batidasDia) {
 							saldo += batida.randomize();
 						}
-
+						
+						Checker.fechamento(batidasDia);
 						Checker.diracaoContinua(batidasDia);
 						Checker.descanso(batidasDia);
 						

@@ -34,17 +34,17 @@ public class Checker {
 				LocalDateTime saida = dia.get(i).getBatida2();
 				LocalDateTime entrada = dia.get(i + 1).getBatida2();
 				if (saida.plusMinutes(30).compareTo(entrada) > 0) {
-					dia = soma30(dia, i + 1);
+					dia = somaMinutos(dia, i + 1, 30);
 				}
 			}
 		}
 		return dia;
 	}
 
-	private static ArrayList<Batida> soma30(ArrayList<Batida> dia, int index) {
+	private static ArrayList<Batida> somaMinutos(ArrayList<Batida> dia, int index, int minutos) {
 		for (int i = index; i < dia.size(); i++) {
 			Batida bat = dia.get(i);
-			bat.setBatida2(bat.batida2.plusMinutes(30));
+			bat.setBatida2(bat.batida2.plusMinutes(minutos));
 			dia.set(i, bat);
 		}
 		return dia;
@@ -83,5 +83,34 @@ public class Checker {
 		if (ajuste < -90)
 			System.out.println("Ajuste grande: " + entrada.format(DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm")));
 		return saidaNova;
+	}
+
+	public static void fechamento(ArrayList<Batida> dia) {
+
+		boolean quatroManha = false;
+		LocalDateTime entrada = dia.get(0).getBatida2();
+		LocalDateTime saida = dia.get(1).getBatida2();
+
+		if (dia.get(0).getBatida2().getHour() == 4)
+			quatroManha = true;
+
+		if (quatroManha) {
+			if (dia.size() > 2) {
+				LocalDateTime entrada2 = dia.get(2).getBatida2();
+				if (saida.plusHours(1).compareTo(entrada2) < 0) {
+					entrada = entrada.plusHours(1);
+					dia.get(0).setBatida2(entrada);
+					saida = saida.plusHours(1);
+					dia.get(1).setBatida2(saida);
+				} else {
+					dia = somaMinutos(dia, 0, 60);
+				}
+			} else {
+				entrada = entrada.plusHours(1);
+				dia.get(0).setBatida2(entrada);
+				saida = saida.plusHours(1);
+				dia.get(1).setBatida2(saida);
+			}
+		}
 	}
 }
